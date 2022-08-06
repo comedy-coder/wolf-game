@@ -21,7 +21,7 @@
             this.player.frameY = 5;
         }
         handlerInput(input){
-            if(input.includes("ArrowLeft") || input.includes("ArrrowRight")){
+            if(input.includes("ArrowLeft") || input.includes("ArrowRight")){
                 this.player.setState(states.RUNNING);
             }
 
@@ -54,11 +54,11 @@
         }
         enter(){
             this.player.frameY = 1;
-            if(this.player.onGround()) this.player.vy -= 30;
+            if(this.player.onGround()) this.player.vy -= 27;
         }
         handlerInput(input){
             if(input.player.vy > this.player.weight ){
-                this.player.setState(states.FALLLING);
+                this.player.setState(states.FALLING);
             }
 
         }
@@ -71,7 +71,7 @@
         }
         enter(){
             this.player.frameY = 2;
-            if(this.player.onGround()) this.player.vy -= 30;
+            if(this.player.onGround()) this.player.vy -= 27;
         }
         handlerInput(input){
             if(this.player.onGround() ){
