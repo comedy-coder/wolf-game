@@ -16,8 +16,11 @@ window.addEventListener('load',function(){
                 this.player = new Player(this) ;
                 this.input = new InputHandler();
                 this.background = new BackGround(this);
+                
+                
             }
             update(deltaTime) {
+            
                 this.background.update()
                 this.player.update(this.input.keys,deltaTime);
             }

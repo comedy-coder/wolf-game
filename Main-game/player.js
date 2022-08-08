@@ -8,7 +8,7 @@ export class Player{
         this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
         this.image = player;
-        this.speed = 0;
+        this.speed = 1;
         this.fps = 20;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0
@@ -20,7 +20,7 @@ export class Player{
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame = 5;
-        
+       
 
     }   
     update(input,deltaTime)
