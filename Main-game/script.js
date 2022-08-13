@@ -27,15 +27,25 @@ window.addEventListener('load',function(){
                 this.background.update()
                 this.player.update(this.input.keys,deltaTime);
                     //handleEnemies
-                    if(this.enemeyTimer > this.enemyInterval)
-                     {   this.addEnemy();
-                        this.enemeyTimer = 0;  } 
-                    else this.enemeyTimer += deltaTime;
-                    this.enemies.forEach(enemy => {
-                        enemy.update(deltaTime);
-                        if(enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy),1);
+                if(this.enemeyTimer > this.enemyInterval)
+                      {  
+            
                         
-                    })
+                        this.addEnemy();
+                    
+                         this.enemeyTimer = 0; 
+                         
+                         
+                      } 
+                    else {this.enemeyTimer += deltaTime};
+                   
+                    this.enemies.forEach(enemy => {
+                    enemy.update(deltaTime);
+                    if(enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy),1);
+                    
+                })
+                       
+                       
             }
             draw(context){
                 this.background.draw(context)
@@ -46,10 +56,11 @@ window.addEventListener('load',function(){
                 })
             }
             addEnemy(){
-            if(this.speed > 0 && Math.random()*2 <1) this.enemies.push(new GroundEnemy(this))
-            else if(this.speed > 0  ) this.enemies.push(new CLimbingEnemy(this))
-            this.enemies.push(new FlyingEnemy(this))
-            }
+             this.enemies.push(new GroundEnemy(this));
+                // else if(this.speed > 0  ) {this.enemies.push(new CLimbingEnemy(this))};
+                this.enemies.push(new FlyingEnemy(this));
+                console.log(this.enemies)            
+              }
 
         }
         const game = new Game(canvas.width,canvas.height);
