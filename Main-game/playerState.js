@@ -22,7 +22,7 @@
         }
         handlerInput(input){
             if(input.includes("ArrowLeft") || input.includes("ArrowRight")){
-                this.player.setState(states.RUNNING);
+                this.player.setState(states.RUNNING,1);
             }
 
         }
@@ -38,10 +38,10 @@
         }
         handlerInput(input){
             if(input.includes("ArrowDown") ){
-                this.player.setState(states.SITTING);
+                this.player.setState(states.SITTING,0);
             }
             else if(input.includes("ArrowUP")){
-                this.player.setState(states.JUMPING);
+                this.player.setState(states.JUMPING,1);
             }
 
         }
@@ -58,7 +58,7 @@
         }
         handlerInput(input){
             if(input.player.vy > this.player.weight ){
-                this.player.setState(states.FALLING);
+                this.player.setState(states.FALLING,1);
             }
 
         }
@@ -75,7 +75,7 @@
         }
         handlerInput(input){
             if(this.player.onGround() ){
-                this.player.setState(states.RUNNING);
+                this.player.setState(states.RUNNING,1);
             }
 
         }

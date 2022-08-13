@@ -9,10 +9,10 @@ class Layer{
         this.image = image ;
         this.x = 0;
         this.y = 0;
-        this.speed =  this.game.player.speed
+        this.speed =  this.game.speed
     }
     update()
-    {
+    {   
         if(this.x < -this.width) this.x = 0;
         else this.x -= (this.speed * this.speedModifier);
     }
@@ -39,7 +39,7 @@ export class BackGround {
         this.layer4 = new Layer(this.game, this.width, this.height, 2 , this.layer4image);
         this.layer5 = new Layer(this.game, this.width, this.height, 2 , this.layer5image);
         this.backgroundlayer = [this.layer1,this.layer2,this.layer3,this.layer4,this.layer5];
-        console.log(this.backgroundlayer)
+       
         
         
 
