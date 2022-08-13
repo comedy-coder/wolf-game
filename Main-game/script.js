@@ -14,7 +14,7 @@ window.addEventListener('load',function(){
                 this.width = width;
                 this.height = height;
                 this.groundMargin = 50;
-                this.speed = 2;
+                this.speed = 1;
                 this.player = new Player(this) ;
                 this.input = new InputHandler();
                 this.background = new BackGround(this);
@@ -46,10 +46,9 @@ window.addEventListener('load',function(){
                 })
             }
             addEnemy(){
-                if(this.speed > 0 && Math.random() < 0.5) this.enemies.push(new GroundEnemy(this));
-                else if(this.speed > 0) this.enemies.push(new CLimbingEnemy(this));
-                this.enemies.push(new FlyingEnemy(this));
-              
+            if(this.speed > 0 && Math.random()*2 <1) this.enemies.push(new GroundEnemy(this))
+            else if(this.speed > 0  ) this.enemies.push(new CLimbingEnemy(this))
+            this.enemies.push(new FlyingEnemy(this))
             }
 
         }
