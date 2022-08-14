@@ -23,6 +23,7 @@ class Enemy
         this.markedForDeletion =  true;
     }
     draw(context){
+        if(this.game.debug) context.strokeRect(this.x,this.y,this.width,this.height);
             context.drawImage(this.image,this.frameX*this.width, 0, this.width,this.height,this.x,this.y, this.width,this.height)
     }
 }
@@ -44,6 +45,7 @@ export class FlyingEnemy extends Enemy{
     }
     update(deltaTime){
             super.update(deltaTime);
+
             this.angle += this.va;
             this.y += Math.sin(this.angle);
     }
@@ -80,10 +82,17 @@ export class CLimbingEnemy extends Enemy {
     }
     update(deltaTime)
     {
-        super.update(deltaTime)
+        super.update(deltaTime);
+        if(this.y > this.game.height - this.height -this.game.groundMargin) this.speedY *= -1;
+        if(this.y < -this.height) this.markedForDeletion = true;
     }
     draw(context)
-    {
+    {   
         super.draw(context);
+        
+        context.beginPath();
+        context.moveTo(this.x + this.width/2,0);
+        context.lineTo(this.x + this.width/2 ,this.y +50);
+        context.stroke();
     }
 } 

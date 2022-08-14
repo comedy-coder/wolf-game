@@ -1,4 +1,4 @@
-import { Sitting ,Running,Jumping,Falling} from "./playerState.js";
+import { Sitting ,Running,Jumping,Falling, Rolling} from "./playerState.js";
 export class Player{
     constructor(game){
         this.game = game ;
@@ -14,7 +14,7 @@ export class Player{
         this.frameTimer = 0
         this.maxSpeed = 10
         this.weight = 1;
-        this.states = [new Sitting(this),new Running(this), new Jumping(this) , new Falling(this)];
+        this.states = [new Sitting(this),new Running(this), new Jumping(this) , new Falling(this),new Rolling(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
         this.frameX = 0;
@@ -25,7 +25,10 @@ export class Player{
     }   
     update(input,deltaTime)
     
-    {   this.currentState.handlerInput(input)
+    {   this.checkCollision();
+
+        this.currentState.handlerInput(input)
+        
                // horizontal movemont
         this.x += this.speed
         if(input.includes('ArrowRight')) this.speed = this.maxSpeed;
@@ -45,10 +48,12 @@ export class Player{
            else this.frameX = 0;
         }
         else this.frameTimer += deltaTime;
+        // console.log(this.currentState)
 
 
     }
     draw(context){
+        if(this.game.debug ) context.strokeRect(this.x,this.y,this.width,this.height);
         context.drawImage(this.image,this.frameX* this.width,this.frameY*this.height,this.width,this.height   ,this.x,this.y,this.width,this.height )
         
        
@@ -58,8 +63,25 @@ export class Player{
         return this.y >= this.game.height -this.height - this.game.groundMargin;
     }
     setState(state, speed){
-        this.currentState = this.states[state];
         this.game.speed = speed;
-       this.currentState.enter();
+        
+        this.currentState = this.states[state];
+        this.currentState.enter();
+    }
+    checkCollision(){
+        this.game.enemies.forEach(enemy => {
+            if(
+                enemy.x < this.x + this.width && 
+                enemy.x + enemy.width > this.x &&
+                enemy.y < this.y + this.height &&
+                enemy.y + enemy.height > this.y
+            ){
+                enemy.markedForDeletion = true;
+                this.game.score ++;
+            }
+            else{
+
+            }
+        })
     }
 }

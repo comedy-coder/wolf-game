@@ -2,7 +2,10 @@
         SITTING : 0,
         RUNNING : 1 ,
         JUMPING : 2,
-        FALLING : 3
+        FALLING : 3,
+        ROLLING : 4,
+        DIVING : 5 ,
+        HIT : 6
     }
    
 
@@ -18,12 +21,18 @@
           this.player = player
         }
         enter(){
+            this.player.frameX = 0;
             this.player.frameY = 5;
+            this.player.maxFrame = 4 ;
         }
         handlerInput(input){
             if(input.includes("ArrowLeft") || input.includes("ArrowRight")){
                 this.player.setState(states.RUNNING,1);
             }
+            else if (input.includes('Enter')){
+                this.player.setState(states.ROLLING,2)
+            }
+
 
         }
        
@@ -34,6 +43,8 @@
           this.player = player
         }
         enter(){
+            this.player.frameX = 0;
+            this.player.maxFrame =6;
             this.player.frameY = 3;
         }
         handlerInput(input){
@@ -42,6 +53,10 @@
             }
             else if(input.includes("ArrowUP")){
                 this.player.setState(states.JUMPING,1);
+            }
+
+            else if (input.includes('Enter')){
+                this.player.setState(states.ROLLING,2)
             }
 
         }
@@ -53,14 +68,18 @@
           this.player = player
         }
         enter(){
+            this.player.frameX = 0;
+            this.player.maxFrame = 6;
             this.player.frameY = 1;
             if(this.player.onGround()) this.player.vy -= 27;
         }
         handlerInput(input){
             if(input.player.vy > this.player.weight ){
                 this.player.setState(states.FALLING,1);
+            } 
+            else if (input.includes('Enter')){
+                this.player.setState(states.ROLLING,2)
             }
-
         }
        
       }
@@ -70,6 +89,8 @@
           this.player = player
         }
         enter(){
+            this.player.frameX = 0;
+            this.player.maxFrame = 6;
             this.player.frameY = 2;
             if(this.player.onGround()) this.player.vy -= 27;
         }
@@ -78,6 +99,32 @@
                 this.player.setState(states.RUNNING,1);
             }
 
+        }
+       
+      }
+     export class Rolling extends State {
+        constructor(player) {
+          super('ROLLING');
+          this.player = player
+        }
+        enter(){
+            this.player.frameX = 0;
+            this.player.maxFrame = 5;
+            this.player.frameY = 6;
+
+        }
+        handlerInput(input){
+            
+            if(!input.includes('Enter') && this.player.onGround()){
+                this.player.setState(states.RUNNING,1);
+            }
+            else if (!input.includes('Enter') && !this.player.onGround()){
+                this.player.setState(states.FALLING,1);
+            }
+            else if (input.includes('Enter') && this.player.onGround() && input.includes('ArrowUp')){
+                this.player.vy -= 1;    
+            }
+            
         }
        
       }

@@ -1,7 +1,8 @@
 import {Player} from './player.js';
 import {InputHandler} from "./InputHandler.js";
 import {BackGround} from "./background.js";
-import { CLimbingEnemy, FlyingEnemy, GroundEnemy} from "./enemies.js"
+import { CLimbingEnemy, FlyingEnemy, GroundEnemy} from "./enemies.js";
+import {UI} from "./UI.js";
 window.addEventListener('load',function(){
         const canvas = this.document.getElementById("canvas1")
         const ctx = canvas.getContext("2d");
@@ -16,11 +17,15 @@ window.addEventListener('load',function(){
                 this.groundMargin = 50;
                 this.speed = 1;
                 this.player = new Player(this) ;
-                this.input = new InputHandler();
+                this.input = new InputHandler(this);
                 this.background = new BackGround(this);
                 this.enemies = [];
+                this.UI = new UI(this)
                 this.enemeyTimer = 0;
-                this.enemyInterval = 1000;
+                this.enemyInterval = 2000;
+                this.debug = false;
+                this.score = 0;
+                this.fontColor = 'red';
             }
             update(deltaTime) {
             
@@ -54,12 +59,13 @@ window.addEventListener('load',function(){
                     enemy.draw(context);
                     
                 })
+                this.UI.draw(context);
             }
             addEnemy(){
-             this.enemies.push(new GroundEnemy(this));
-                // else if(this.speed > 0  ) {this.enemies.push(new CLimbingEnemy(this))};
+                if(this.speed > 0 && Math.random() < 0.5) this.enemies.push(new GroundEnemy(this));
+                else if(this.speed > 0  ) {this.enemies.push(new CLimbingEnemy(this))};
                 this.enemies.push(new FlyingEnemy(this));
-                console.log(this.enemies)            
+                console.log(this.enemies)  
               }
 
         }
