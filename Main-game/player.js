@@ -8,19 +8,19 @@ export class Player{
         this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
         this.image = player;
-        this.speed = 1;
+        this.speed = 2;
         this.fps = 20;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0
         this.maxSpeed = 10
         this.weight = 1;
-        this.states = [new Sitting(this),new Running(this), new Jumping(this) , new Falling(this),new Rolling(this)];
-        this.currentState = this.states[0];
-        this.currentState.enter();
+        
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame = 5;
+        this.states = [new Sitting(this.game),new Running(this.game), new Jumping(this.game) , new Falling(this.game),new Rolling(this.game)];
        
+    
 
     }   
     update(input,deltaTime)
@@ -48,7 +48,7 @@ export class Player{
            else this.frameX = 0;
         }
         else this.frameTimer += deltaTime;
-        // console.log(this.currentState)
+      
 
 
     }
