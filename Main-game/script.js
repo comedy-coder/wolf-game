@@ -21,7 +21,8 @@ window.addEventListener('load',function(){
                 this.background = new BackGround(this);
                 this.enemies = [];
                 this.particles = [];
-                this.UI = new UI(this)
+                this.UI = new UI(this);
+                this.maxParticles = 50;
                 this.enemeyTimer = 0;
                 this.enemyInterval = 2000;
                 this.debug = false;
@@ -31,7 +32,7 @@ window.addEventListener('load',function(){
                 this.player.currentState.enter();
             }
             update(deltaTime) {
-            
+                
                 this.background.update()
                 this.player.update(this.input.keys,deltaTime);
                     //handleEnemies
@@ -56,9 +57,12 @@ window.addEventListener('load',function(){
                         particle.update();
                         if(particle.markedForDeletion) this.particles.splice(index,1)
                     });
-                    
+                    if(this.particles.length > this.maxParticles)
+                    {
+                        this.particles =this.particles.slice(0, this.maxParticles)
+                    }
                 })
-                       
+                 
                        
             }
             draw(context){
@@ -78,7 +82,7 @@ window.addEventListener('load',function(){
                 if(this.speed > 0 && Math.random() < 0.5) this.enemies.push(new GroundEnemy(this));
                 else if(this.speed > 0  ) {this.enemies.push(new CLimbingEnemy(this))};
                 this.enemies.push(new FlyingEnemy(this));
-                console.log(this.enemies)  
+                
               }
 
         }

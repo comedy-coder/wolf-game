@@ -1,4 +1,4 @@
-import { Sitting ,Running,Jumping,Falling, Rolling} from "./playerState.js";
+import { Sitting ,Running,Jumping,Falling, Rolling, Diving} from "./playerState.js";
 export class Player{
     constructor(game){
         this.game = game ;
@@ -18,7 +18,7 @@ export class Player{
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame = 5;
-        this.states = [new Sitting(this.game),new Running(this.game), new Jumping(this.game) , new Falling(this.game),new Rolling(this.game)];
+        this.states = [new Sitting(this.game),new Running(this.game), new Jumping(this.game) , new Falling(this.game),new Rolling(this.game),new Diving(this.game)];
        
     
 
@@ -41,6 +41,8 @@ export class Player{
         this.y  +=this.vy;
         if(!this.onGround() ) this.vy += this.weight;
         else this.vy = 0;
+        //vertical boundaries 
+        if(this.y > this.game.height -this.height -this.game.groundMargin) this.y = this.game.height -this.height- this.game.groundMargin;
         //spirte animation
        if(this.frameTimer  > this.frameInterval){
            this.frameTimer = 0;
