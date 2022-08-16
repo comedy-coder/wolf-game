@@ -6,7 +6,7 @@ import {UI} from "./UI.js";
 window.addEventListener('load',function(){
         const canvas = this.document.getElementById("canvas1")
         const ctx = canvas.getContext("2d");
-        canvas.width = 500;
+        canvas.width = 900;
         canvas.height = 500;
         let lastTime = 0;
         class Game{
@@ -14,7 +14,7 @@ window.addEventListener('load',function(){
             {
                 this.width = width;
                 this.height = height;
-                this.groundMargin = 50;
+                this.groundMargin = 40;
                 this.speed = 3;
                 this.player = new Player(this) ;
                 this.input = new InputHandler(this);
@@ -25,15 +25,19 @@ window.addEventListener('load',function(){
                 this.UI = new UI(this);
                 this.maxParticles = 50;
                 this.enemeyTimer = 0;
-                this.enemyInterval = 2000;
+                this.enemyInterval = 1000;
                 this.debug = false;
                 this.score = 0;
-                this.fontColor = 'red';
+                this.time = 0;
+                this.maxTime = 15000;
+                this.fontColor = 'black';
+                this.gameOver = false;
                 this.player.currentState = this.player.states[0];
                 this.player.currentState.enter();
             }
             update(deltaTime) {
-                
+                this.time += deltaTime;
+                if(this.time > this.maxTime) this.gameOver = true;
                 this.background.update()
                 this.player.update(this.input.keys,deltaTime);
                     //handleEnemies
@@ -105,7 +109,7 @@ window.addEventListener('load',function(){
             ctx.clearRect(0,0,canvas.width,canvas.width)
             game.update(deltaTime);
             game.draw(ctx);
-            requestAnimationFrame(animate);
+            if(!game.GameOver) requestAnimationFrame(animate);
         }
         animate(0);
 })
